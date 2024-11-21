@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla Cocina</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Pedidos para Cocina</h1>
+  <ul id="pedidos"></ul>
+
+  <script>
+    const socket = io('http://localhost:4000');
+    socket.emit('unirArea', 'cocina');
+    socket.on('nuevoPedido', (pedido) => {
+      const lista = document.getElementById('pedidos');
+      const item = document.createElement('li');
+      item.textContent = `Mesa ${pedido.mesa}: ${pedido.producto} x${pedido.cantidad}`;
+      lista.appendChild(item);
+    });
+  </script>
+</body>
+</html>
